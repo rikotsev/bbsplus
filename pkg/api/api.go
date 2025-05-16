@@ -19,7 +19,7 @@ func KeyGen(keyMaterial []byte, opts KeyGenOpts) ([]byte, error) {
 		opts.KeyInfo = []byte{}
 	}
 
-	sizedOct, _ := transformations.Itosp(big.NewInt(int64(len(opts.KeyInfo))), 2)
+	sizedOct, _ := transformations.ItoOsp(big.NewInt(int64(len(opts.KeyInfo))), 2)
 	deriveInput := append(keyMaterial, sizedOct...)
 	deriveInput = append(deriveInput, opts.KeyInfo...)
 

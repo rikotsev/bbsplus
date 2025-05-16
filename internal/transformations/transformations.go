@@ -9,10 +9,10 @@ var ErrIntegerTooLarge = errors.New("integer too large. x < 256^xLen")
 var ErrNegativeNumber = errors.New("integer is negative. x >= 0")
 var ErrIllegalSize = errors.New("size should be at least 1. xLen > 0")
 
-// Itosp Converts a non-negative integer to an octet string of a specified length
+// ItoOsp Converts a non-negative integer to an octet string of a specified length
 //
 // https://www.rfc-editor.org/rfc/rfc8017.html#section-4.1
-func Itosp(x *big.Int, xLen int) ([]byte, error) {
+func ItoOsp(x *big.Int, xLen int) ([]byte, error) {
 	if xLen <= 0 {
 		return nil, ErrIllegalSize
 	}

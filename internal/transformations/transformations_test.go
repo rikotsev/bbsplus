@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestItospErrors(t *testing.T) {
+func TestItoOspErrors(t *testing.T) {
 
 	testCases := []struct {
 		x        *big.Int
@@ -32,10 +32,10 @@ func TestItospErrors(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		_, err := Itosp(testCase.x, testCase.xLen)
+		_, err := ItoOsp(testCase.x, testCase.xLen)
 
 		if !errors.Is(err, testCase.expected) {
-			t.Errorf("Itosp(%d, %d) = %v, want %v", testCase.x, testCase.xLen, err, testCase.expected)
+			t.Errorf("ItoOsp(%d, %d) = %v, want %v", testCase.x, testCase.xLen, err, testCase.expected)
 		}
 	}
 }
@@ -47,7 +47,7 @@ func pad(input []byte, size int) []byte {
 	return tmp
 }
 
-func TestItosp(t *testing.T) {
+func TestIToOsp(t *testing.T) {
 	testCases := []struct {
 		x        *big.Int
 		xLen     int
@@ -71,14 +71,14 @@ func TestItosp(t *testing.T) {
 	}
 
 	for _, testCase := range testCases {
-		actual, err := Itosp(testCase.x, testCase.xLen)
+		actual, err := ItoOsp(testCase.x, testCase.xLen)
 		if err != nil {
-			t.Errorf("Itosp(%d, %d) produced unexpected error %v", testCase.x, testCase.xLen, err)
+			t.Errorf("ItoOsp(%d, %d) produced unexpected error %v", testCase.x, testCase.xLen, err)
 			continue
 		}
 
 		if !bytes.Equal(actual, testCase.expected) {
-			t.Errorf("Itosp(%d, %d) = %v, want %v", testCase.x, testCase.xLen, actual, testCase.expected)
+			t.Errorf("ItoOsp(%d, %d) = %v, want %v", testCase.x, testCase.xLen, actual, testCase.expected)
 		}
 	}
 }
