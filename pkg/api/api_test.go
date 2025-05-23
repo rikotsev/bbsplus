@@ -6,6 +6,9 @@ import (
 	"testing"
 )
 
+// TestKeyGen uses the vectors supplied in the RFC
+//
+// https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-05.html#name-key-pair
 func TestKeyGen(t *testing.T) {
 	bbs := NewBbs(definitions.CreateBls12_381_Shake_256())
 

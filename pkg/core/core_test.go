@@ -7,6 +7,10 @@ import (
 	"testing"
 )
 
+// TestHashToScalar uses test vectors from the RFC
+//
+// For now only for SHAKE-256
+// https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-05.html#name-hash-to-scalar-test-vectors
 func TestHashToScalar(t *testing.T) {
 	bbsCore := NewBbsCore(definitions.CreateBls12_381_Shake_256())
 	msg, _ := big.NewInt(0).SetString("9872ad089e452c7b6e283dfac2a80d58e8d0ff71cc4d5e310a1debdda4a45f02", 16)
