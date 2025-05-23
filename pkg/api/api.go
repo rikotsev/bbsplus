@@ -1,7 +1,10 @@
 package api
 
 import (
+	"bbsplus/internal/definitions"
 	"bbsplus/internal/transformations"
+	"bbsplus/pkg/core"
+	"fmt"
 	"math/big"
 )
 
@@ -10,9 +13,25 @@ type KeyGenOpts struct {
 	KeyDst  []byte
 }
 
-func KeyGen(keyMaterial []byte, opts KeyGenOpts) ([]byte, error) {
+type Bbs struct {
+	CipherSuite *definitions.CipherSuite
+	bbsCore     *core.BbsCore
+}
+
+func NewBbs(cipherSuite *definitions.CipherSuite) *Bbs {
+	return &Bbs{
+		CipherSuite: cipherSuite,
+		bbsCore:     core.NewBbsCore(cipherSuite),
+	}
+}
+
+// KeyGen generates an SK (secret key)
+//
+// https://www.ietf.org/archive/id/draft-irtf-cfrg-bbs-signatures-05.html#name-secret-key
+func (bbs *Bbs) KeyGen(keyMaterial []byte, opts KeyGenOpts) ([]byte, error) {
+	//TODO maybe error out
 	if opts.KeyDst == nil {
-		opts.KeyDst = []byte("BBS_BLS12381G1_XOF:SHAKE-256_SSWU_RO_H2G_HM2S_KEYGEN_DST_")
+		opts.KeyDst = []byte{}
 	}
 
 	if opts.KeyInfo == nil {
@@ -23,5 +42,10 @@ func KeyGen(keyMaterial []byte, opts KeyGenOpts) ([]byte, error) {
 	deriveInput := append(keyMaterial, sizedOct...)
 	deriveInput = append(deriveInput, opts.KeyInfo...)
 
-	return nil, nil
+	secretKey, err := bbs.bbsCore.HashToScalar(deriveInput, opts.KeyDst)
+	if err != nil {
+		return nil, fmt.Errorf("failed to hash to scalar: %w", err)
+	}
+
+	return secretKey, nil
 }
